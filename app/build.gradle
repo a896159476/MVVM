@@ -16,8 +16,23 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //自动生成指定名称的release发布版的 apk文件
+    android.applicationVariants.all { variant ->
+        def appName
+        if (project.hasProperty("applicationName")) {
+            appName = applicationName
+        } else {
+            appName = parent.name
+        }
+
+        variant.outputs.all { output ->
+            outputFileName = "$appName-v${version}.apk"
         }
     }
 }

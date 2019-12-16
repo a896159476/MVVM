@@ -4,11 +4,18 @@ import android.app.DownloadManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.view.View
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
+import androidx.viewpager2.widget.ViewPager2
 import com.epuxun.mvvm.R
 import com.epuxun.mvvm.base.mvvm.BaseMVVMActivity
+import com.epuxun.mvvm.bean.MainBean
+import com.epuxun.mvvm.main.viewpager.MainFragmentAdapter
+import com.epuxun.mvvm.main.viewpager.ViewPagerAdapter
 import com.epuxun.mvvm.utli.PERMISSION_REQUEST_CODE
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseMVVMActivity<MainViewModel>() {
@@ -37,6 +44,31 @@ class MainActivity : BaseMVVMActivity<MainViewModel>() {
     }
 
     override fun onCreate() {
+        viewPager2.adapter = MainFragmentAdapter(this)
+        viewPager2.setPageTransformer { page, position ->
+            page.run {
+                //绝对值:百分比
+                val absPos = Math.abs(position)
+                //左边距 = 位置百分比 * 最大距离
+                translationX = absPos * 350f
+                translationY = absPos * 500f
+                //缩放
+                val scale = if (absPos > 1) 0F else 1 - absPos
+                scaleX = scale
+                scaleY = scale
+                //旋转角度 = 百分比 * 最大角度
+                rotation = position * 360
+            }
+        }
+
+        TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
+            if (position == 0) {
+                tab.text = "首页"
+            } else {
+                tab.text = "我的"
+            }
+        }.attach()
+
         //注册广播
         registerExternalReceiver(receive, DownloadManager.ACTION_DOWNLOAD_COMPLETE)
         //应用更新提示

@@ -29,8 +29,6 @@ abstract class BaseMVVMFragment<T : ViewModel> : Fragment() {
 
     abstract fun getLayoutResID(): Int
 
-    abstract fun addObserver(): LifecycleObserver?
-
     abstract fun getViewModel(): Class<T>
 
     abstract fun onViewCreated(view: View)
@@ -45,10 +43,6 @@ abstract class BaseMVVMFragment<T : ViewModel> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //绑定组件的声明周期
-        addObserver()?.let {
-            lifecycle.addObserver(it)
-        }
 
         onViewCreated(view)
     }

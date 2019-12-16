@@ -61,7 +61,11 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.9.2")
 
     //ViewModelProvider
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-rc02'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-rc03'
     //viewModel协程
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc02'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03'
+
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0-beta02'
+
 }
